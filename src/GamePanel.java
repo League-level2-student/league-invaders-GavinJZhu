@@ -2,9 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.Timer.*;
 
-public class GamePanel extends JPanel implements ActionListener {
+public class GamePanel extends JPanel implements ActionListener, KeyListener {
     final int MENU = 0;
     final int GAME = 1;
     final int END = 2;
@@ -12,11 +14,13 @@ public class GamePanel extends JPanel implements ActionListener {
     Font titleFont;
     Font introFont;
     Font gameOverFont;
+    Font statsFont;
     Timer frameDraw;
     GamePanel (){
         titleFont = new Font("Arial", Font.PLAIN, 48);
         introFont = new Font("Arial", Font.PLAIN, 24);
-        gameOverFont = new Font("Arial", Font.PLAIN, 24);
+        gameOverFont = new Font("Arial", Font.PLAIN, 48);
+        statsFont = new Font("Arial", Font.PLAIN, 24);
         frameDraw = new Timer(1000/60, this);
         frameDraw.start();
     }
@@ -62,8 +66,12 @@ public class GamePanel extends JPanel implements ActionListener {
         g.setColor(Color.RED);
         g.fillRect(0,0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
         g.setFont(gameOverFont);
-        g.setColor(Color.RED);
-        g.drawString("Game Over", 100, 100);
+        g.setColor(Color.YELLOW);
+        g.drawString("Game Over", 117, 100);
+        g.setFont(statsFont);
+        g.setColor(Color.yellow);
+        g.drawString("You killed " + " enemies", 150, 400);
+        g.drawString("Press ENTER to restart", 125, 550);
     }
 
     @Override
@@ -79,6 +87,39 @@ public class GamePanel extends JPanel implements ActionListener {
         }
         System.out.println("action");
         repaint();
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER) {
+            if (currentState == END) {
+                currentState = MENU;
+            } else {
+                currentState++;
+            }
+        }
+        if (e.getKeyCode()==KeyEvent.VK_UP) {
+            System.out.println("UP");
+        }
+        else if(e.getKeyCode()==KeyEvent.VK_DOWN) {
+            System.out.println("DOWN");
+        }
+        else if (e.getKeyCode()==KeyEvent.VK_LEFT) {
+            System.out.println("LEFT");
+        }
+        else if (e.getKeyCode()==KeyEvent.VK_RIGHT) {
+            System.out.println("RIGHT");
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }
 
