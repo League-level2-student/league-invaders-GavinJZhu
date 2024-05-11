@@ -17,38 +17,41 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     Font statsFont;
     Timer frameDraw;
     Rocketship rocketship;
-    GamePanel (){
+
+    GamePanel() {
         titleFont = new Font("Arial", Font.PLAIN, 48);
         introFont = new Font("Arial", Font.PLAIN, 24);
         gameOverFont = new Font("Arial", Font.PLAIN, 48);
         statsFont = new Font("Arial", Font.PLAIN, 24);
-        frameDraw = new Timer(1000/60, this);
+        frameDraw = new Timer(1000 / 60, this);
         frameDraw.start();
         rocketship = new Rocketship();
     }
 
 
     @Override
-    public void paintComponent(Graphics g){
-        if(currentState == MENU){
+    public void paintComponent(Graphics g) {
+        if (currentState == MENU) {
             drawMenuState(g);
-        }
-        else if(currentState == GAME){
+        } else if (currentState == GAME) {
             drawGameState(g);
-        }
-        else if(currentState == END){
+        } else if (currentState == END) {
             drawEndState(g);
         }
     }
+
     void updateMenuState() {
 
     }
+
     void updateGameState() {
 
     }
-    void updateEndState()  {
+
+    void updateEndState() {
 
     }
+
     void drawMenuState(Graphics g) {
         g.setColor(Color.BLUE);
         g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
@@ -60,14 +63,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         g.drawString("Press ENTER to start", 125, 400);
         g.drawString("Press SPACE for instructions", 85, 550);
     }
+
     void drawGameState(Graphics g) {
         g.setColor(Color.BLACK);
-        g.fillRect(0,0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+        g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
         rocketship.draw(g);
     }
-    void drawEndState(Graphics g)  {
+
+    void drawEndState(Graphics g) {
         g.setColor(Color.RED);
-        g.fillRect(0,0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+        g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
         g.setFont(gameOverFont);
         g.setColor(Color.YELLOW);
         g.drawString("Game Over", 117, 100);
@@ -79,13 +84,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(currentState == MENU){
+        if (currentState == MENU) {
             updateMenuState();
-        }
-        else if(currentState == GAME){
+        } else if (currentState == GAME) {
             updateGameState();
-        }
-        else if(currentState == END){
+        } else if (currentState == END) {
             updateEndState();
         }
         System.out.println("action");
@@ -99,24 +102,33 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode()==KeyEvent.VK_ENTER) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             if (currentState == END) {
                 currentState = MENU;
             } else {
                 currentState++;
             }
         }
-        if (e.getKeyCode()==KeyEvent.VK_UP) {
+        if (e.getKeyCode() == KeyEvent.VK_UP) {
             System.out.println("UP");
-        }
-        else if(e.getKeyCode()==KeyEvent.VK_DOWN) {
+            if (rocketship.y > 10) {
+                rocketship.up();
+            }
+        } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             System.out.println("DOWN");
-        }
-        else if (e.getKeyCode()==KeyEvent.VK_LEFT) {
+            if (rocketship.y < 700) {
+                rocketship.down();
+            }
+        } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             System.out.println("LEFT");
-        }
-        else if (e.getKeyCode()==KeyEvent.VK_RIGHT) {
+            if (rocketship.x > 10) {
+                rocketship.left();
+            }
+        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             System.out.println("RIGHT");
+            if (rocketship.x < 430) {
+                rocketship.right();
+            }
         }
     }
 
