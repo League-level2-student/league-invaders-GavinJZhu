@@ -26,6 +26,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         frameDraw = new Timer(1000 / 60, this);
         frameDraw.start();
         rocketship = new Rocketship();
+
     }
 
 

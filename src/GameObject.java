@@ -6,7 +6,8 @@ public class GameObject {
     int speed = 0;
     boolean isActive= true;
     GameObject() {
-
+    x = 250;
+    y = 700;
 
     }
     void update(){
