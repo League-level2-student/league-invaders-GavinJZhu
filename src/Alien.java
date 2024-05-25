@@ -1,7 +1,7 @@
 import java.awt.*;
 
 public class Alien extends GameObject{
-    Alien() {
+    Alien(int one, int two, int three, int four) {
         speed = 1;
     }
     public void update(){
