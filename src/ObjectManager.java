@@ -17,7 +17,7 @@ public class ObjectManager {
 
     }
     public void addAlien(){
-        aliens.add(new Alien(random.nextInt(LeagueInvaders.WIDTH),0,50,50));
+        aliens.add(new Alien(random.nextInt(LeagueInvaders.WIDTH),0));
     }
     public void update(){
         updateAliens();
