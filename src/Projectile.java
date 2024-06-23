@@ -6,7 +6,7 @@ public class Projectile extends GameObject{
     public static BufferedImage image;
     public static boolean needImage = true;
     public static boolean gotImage = false;
-    Projectile(int x, int y){
+    Projectile(int x, int y, int width, int height){
         super(x, y, 50, 50);
         speed = 10;
         if (needImage) {
@@ -15,6 +15,7 @@ public class Projectile extends GameObject{
     }
     public void update(){
         y-=speed;
+        super.update();
     }
     public void draw(Graphics g){
         if (gotImage) {
