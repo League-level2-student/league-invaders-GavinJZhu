@@ -1,7 +1,7 @@
 import javax.swing.*;
 
 public class LeagueInvaders {
-    //on step 5 of collision management
+    //fix collisions
     JFrame frame;
     static final int WIDTH = 500;
     static final int HEIGHT = 800;

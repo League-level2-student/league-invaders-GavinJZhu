@@ -24,6 +24,7 @@ public class ObjectManager implements ActionListener {
     public void update(){
         updateAliens();
         updateProjectiles();
+        checkCollision();
     }
     public void updateAliens(){
         for (Alien alien: aliens){
@@ -62,7 +63,7 @@ public class ObjectManager implements ActionListener {
     }
     public void purgeAliens(){
         for (Alien alien: aliens){
-            if (alien.isActive == false){
+            if (!alien.isActive){
                 aliens.remove(alien);
             }
         }
@@ -74,5 +75,19 @@ public class ObjectManager implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         addAlien();
+    }
+    public void checkCollision(){
+        for(Alien alien : aliens){
+            if (rocket.collisionBox.intersects(alien.collisionBox)){
+                alien.isActive = false;
+                rocket.isActive = false;
+            }
+            for (Projectile projectile : projectiles){
+                if (projectile.collisionBox.intersects(alien.collisionBox)){
+                    alien.isActive = false;
+                    projectile.isActive = false;
+                }
+            }
+        }
     }
 }
