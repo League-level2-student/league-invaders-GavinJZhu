@@ -9,6 +9,7 @@ public class ObjectManager implements ActionListener {
     ArrayList<Projectile> projectiles = new ArrayList<>();
     ArrayList<Alien> aliens = new ArrayList<>();
     Random random = new Random();
+    int score = 0;
 
     ObjectManager(Rocketship rocketship){
         rocket = rocketship;
@@ -24,7 +25,9 @@ public class ObjectManager implements ActionListener {
     public void update(){
         updateAliens();
         updateProjectiles();
+        rocket.update();
         checkCollision();
+        purgeObjects();
     }
     public void updateAliens(){
         for (Alien alien: aliens){
@@ -62,11 +65,7 @@ public class ObjectManager implements ActionListener {
         purgeProjectiles();
     }
     public void purgeAliens(){
-        for (Alien alien: aliens){
-            if (!alien.isActive){
-                aliens.remove(alien);
-            }
-        }
+        aliens.removeIf(alien -> !alien.isActive);
     }
     public void purgeProjectiles(){
         projectiles.removeIf(pro-> !pro.isActive);
