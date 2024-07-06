@@ -11,82 +11,99 @@ public class ObjectManager implements ActionListener {
     Random random = new Random();
     int score = 0;
 
-    ObjectManager(Rocketship rocketship){
+    ObjectManager(Rocketship rocketship) {
         rocket = rocketship;
 
 
     }
-    public void addProjectile(Projectile projectile){
+
+    public void addProjectile(Projectile projectile) {
         projectiles.add(projectile);
     }
-    public void addAlien(){
-        aliens.add(new Alien(random.nextInt(LeagueInvaders.WIDTH),0));
+
+    public void addAlien() {
+        aliens.add(new Alien(random.nextInt(LeagueInvaders.WIDTH), 0));
     }
-    public void update(){
+
+    public void update() {
         updateAliens();
         updateProjectiles();
         rocket.update();
         checkCollision();
         purgeObjects();
     }
-    public void updateAliens(){
-        for (Alien alien: aliens){
+
+    public void updateAliens() {
+        for (Alien alien : aliens) {
             alien.update();
-            if (alien.y>LeagueInvaders.HEIGHT || alien.y<=0){
+            if (alien.y > LeagueInvaders.HEIGHT || alien.y <= 0) {
                 alien.isActive = false;
             }
         }
     }
-    public void updateProjectiles(){
-        for(Projectile projectile: projectiles){
+
+    public void updateProjectiles() {
+        for (Projectile projectile : projectiles) {
             projectile.update();
-            if (projectile.y>LeagueInvaders.HEIGHT || projectile.y<=0){
+            if (projectile.y > LeagueInvaders.HEIGHT || projectile.y <= 0) {
                 projectile.isActive = false;
             }
         }
     }
-    public void draw(Graphics g){
+
+    public void draw(Graphics g) {
         rocket.draw(g);
         drawAliens(g);
         drawProjectiles(g);
     }
-    public void drawAliens(Graphics g){
-        for (Alien alien: aliens){
+
+    public void drawAliens(Graphics g) {
+        for (Alien alien : aliens) {
             alien.draw(g);
         }
     }
-    public void drawProjectiles(Graphics g){
-        for (Projectile projectile: projectiles){
+
+    public void drawProjectiles(Graphics g) {
+        for (Projectile projectile : projectiles) {
             projectile.draw(g);
         }
     }
-    public void purgeObjects(){
+
+    public void purgeObjects() {
         purgeAliens();
         purgeProjectiles();
     }
-    public void purgeAliens(){
+
+    public void purgeAliens() {
         aliens.removeIf(alien -> !alien.isActive);
     }
-    public void purgeProjectiles(){
-        projectiles.removeIf(pro-> !pro.isActive);
+
+    public void purgeProjectiles() {
+        projectiles.removeIf(pro -> !pro.isActive);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         addAlien();
     }
-    public void checkCollision(){
-        for(Alien alien : aliens){
-            if (rocket.collisionBox.intersects(alien.collisionBox)){
+
+    public void checkCollision() {
+        for (Alien alien : aliens) {
+            if (rocket.collisionBox.intersects(alien.collisionBox)) {
                 alien.isActive = false;
                 rocket.isActive = false;
             }
-            for (Projectile projectile : projectiles){
-                if (projectile.collisionBox.intersects(alien.collisionBox)){
+            for (Projectile projectile : projectiles) {
+                if (projectile.collisionBox.intersects(alien.collisionBox)) {
                     alien.isActive = false;
                     projectile.isActive = false;
+                    score+=1;
                 }
             }
         }
+    }
+
+    public int getScore() {
+        return score;
     }
 }

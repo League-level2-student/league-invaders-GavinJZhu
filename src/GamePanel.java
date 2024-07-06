@@ -17,6 +17,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     Font introFont;
     Font gameOverFont;
     Font statsFont;
+    Font scoreFont;
     Timer frameDraw;
     Rocketship rocketship;
     ObjectManager objectManager;
@@ -30,6 +31,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         introFont = new Font("Arial", Font.PLAIN, 24);
         gameOverFont = new Font("Arial", Font.PLAIN, 48);
         statsFont = new Font("Arial", Font.PLAIN, 24);
+        scoreFont = new Font("Arial", Font.PLAIN,15);
         frameDraw = new Timer(1000 / 60, this);
         frameDraw.start();
         rocketship = new Rocketship(250, 700, 50, 50);
@@ -85,6 +87,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     void drawGameState(Graphics g) {
         if (gotImage) {
             g.drawImage(image, 0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT, null);
+            g.setFont(scoreFont);
+            g.setColor(Color.yellow);
+            g.drawString("Score: " + objectManager.getScore(), 20, 20);
         } else {
             g.setColor(Color.BLUE);
             g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
@@ -100,7 +105,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         g.drawString("Game Over", 117, 100);
         g.setFont(statsFont);
         g.setColor(Color.yellow);
-        g.drawString("You killed " + " enemies", 150, 400);
+        g.drawString("You killed " + objectManager.getScore() + " enemies", 150, 400);
         g.drawString("Press ENTER to restart", 125, 550);
 
     }
@@ -114,7 +119,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         } else if (currentState == END) {
             updateEndState();
         }
-        System.out.println("action");
         repaint();
     }
 
@@ -127,9 +131,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             if (currentState == END) {
+                rocketship = new Rocketship(250, 700, 50, 50);
+                objectManager = new ObjectManager(rocketship);
                 currentState = MENU;
             }
-            if (currentState == MENU){
+            else if (currentState == MENU){
                 currentState = GAME;
                 startGame();
             }
@@ -139,22 +145,18 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_UP) {
-            System.out.println("UP");
             if (rocketship.y > 10) {
                 rocketship.up();
             }
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            System.out.println("DOWN");
             if (rocketship.y < 700) {
                 rocketship.down();
             }
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            System.out.println("LEFT");
             if (rocketship.x > 10) {
                 rocketship.left();
             }
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            System.out.println("RIGHT");
             if (rocketship.x < 430) {
                 rocketship.right();
             }
